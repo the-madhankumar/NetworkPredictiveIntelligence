@@ -1,0 +1,11 @@
+- Analytics grain validation
+- (grid_id, timestamp) duplicate detection
+- Country-code aggregation
+- properties.cellId geographic joins
+- Activity semantics
+- Congestion interpretation
+- AS_OF behaviour
+- Spark pipeline transformations
+- ML scoring
+- Backend/API routes
+- React/dashboard behaviour

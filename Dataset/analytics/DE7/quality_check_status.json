@@ -1,0 +1,40 @@
+{
+  "run_id": "DE7-RUN-BEA3ED9A",
+  "timestamp": "2026-09-12T07:07:44.084213+00:00",
+  "as_of": "2026-09-12T07:07:44.084213+00:00",
+  "overall_status": "PASS",
+  "tasks": [
+    {
+      "task_name": "ingest_check",
+      "status": "PASS",
+      "rows_in": 15089165,
+      "rows_rejected": 0,
+      "nulls_handled": 0,
+      "rows_published": 0
+    },
+    {
+      "task_name": "raw_validation",
+      "status": "PASS",
+      "rows_in": 15089165,
+      "rows_rejected": 0,
+      "nulls_handled": 0,
+      "rows_published": 0
+    },
+    {
+      "task_name": "warehouse_validation",
+      "status": "PASS",
+      "rows_in": 2419,
+      "rows_rejected": 0,
+      "nulls_handled": 0,
+      "rows_published": 1679994
+    },
+    {
+      "task_name": "quality_check",
+      "status": "PASS",
+      "rows_in": 1679994,
+      "rows_rejected": 0,
+      "nulls_handled": 0,
+      "rows_published": 1679994
+    }
+  ]
+}

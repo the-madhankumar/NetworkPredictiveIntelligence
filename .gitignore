@@ -1,0 +1,117 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+.env.local
+.env.*.local
+
+# Environment variables (CRITICAL - never commit secrets)
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+*.pem
+*.key
+
+# Data / Logs (large files, local runs)
+log/
+logs/
+*.log
+Dataset/raw/
+Dataset/landing/
+
+# Airflow
+airflow.db
+logs/
+plugins/
+.airflowignore
+
+# Node modules (React frontend)
+node_modules/
+npm-debug.log
+yarn-error.log
+.npm
+
+# React build
+build/
+dist/
+
+# Machine Learning
+*.pkl
+*.joblib
+*.h5
+*.model
+.weights/
+
+# Spark
+metastore_db/
+derby.log
+
+# Temporary/Local files
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
+scratch/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Package manager
+package-lock.json
+yarn.lock
+
+# IDE temporary files
+*.bak
+*.swp
+*.swo
+
+Dataset/SP2/cleaned_activity.parquet

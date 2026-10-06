@@ -1,0 +1,8 @@
+{
+  "name": "network-engineering",
+  "version": "1.0.0",
+  "description": "Claude Code tooling for telecom network engineering, anomaly analysis, pipeline diagnostics, ML review, and NOC investigation.",
+  "author": {
+    "name": "Network Engineering Team"
+  }
+}

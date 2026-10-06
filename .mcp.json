@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "network-intelligence": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "D:\\Training Project\\Project 2\\src\\mcp-server\\server.py"
+      ],
+      "env": {
+        "NETWORK_API_BASE_URL": "http://127.0.0.1:8000"
+      }
+    }
+  }
+}

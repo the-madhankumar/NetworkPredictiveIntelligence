@@ -1,0 +1,191 @@
+pipeline:
+  name: telecom_de8_pipeline
+  version: "1.0"
+
+paths:
+  raw: "D:/Training Project/Project 2/src/AirFlow/data/raw"
+  processed: "D:/Training Project/Project 2/src/AirFlow/data/processed"
+  analytics: "D:/Training Project/Project 2/src/AirFlow/data/analytics"
+  reference: "D:/Training Project/Project 2/src/AirFlow/data/reference"
+  status: "D:/Training Project/Project 2/src/AirFlow/status/pipeline_status.json"
+
+input:
+  file_pattern: "sms-call-internet-mi-*.csv"
+
+raw_validation:
+  required_columns:
+    - datetime
+    - CellID
+    - countrycode
+    - smsin
+    - smsout
+    - callin
+    - callout
+    - internet
+
+  non_null_columns:
+    - datetime
+    - CellID
+
+  minimum_row_count: 1
+
+processed_validation:
+  required_columns:
+    - timestamp
+    - grid_id
+    - sms_in
+    - sms_out
+    - call_in
+    - call_out
+    - internet
+    - total_sms_activity
+    - total_call_activity
+    - total_activity
+
+  non_null_columns:
+    - timestamp
+    - grid_id
+
+  minimum_row_count: 1
+
+warehouse:
+  table_name: fact_network_activity
+  minimum_row_count: 1
+
+  required_columns:
+    - time_key
+    - grid_id
+    - sms_in
+    - sms_out
+    - call_in
+    - call_out
+    - internet_activity
+    - total_sms
+    - total_calls
+    - total_activity
+    - internet_share
+
+  database:
+    driver: "mysql+pymysql"
+    username: "root"
+    password: "root"
+    host: "localhost"
+    port: 3306
+    database_name: "network_predictive_intelligence"
+
+quality:
+  check_row_counts: true
+  check_nulls: true
+  check_duplicates: true
+
+airflow:
+  retries: 1
+  retry_delay_minutes: 2
+
+de8:
+  enabled: true
+
+  failure_handling:
+
+    missing_file:
+      action: FAIL
+
+    duplicate_file:
+      action: REJECT
+
+    duplicate_ingestion:
+      action: CONTINUE
+
+    malformed_timestamp:
+      action: QUARANTINE
+
+    negative_activity:
+      action: QUARANTINE
+
+    missing_required_column:
+      action: REJECT
+
+    unexpected_column:
+      action: WARN
+
+    partially_corrupt_file:
+      action: QUARANTINE
+
+    spark_failure:
+      action: RETRY
+
+  quarantine:
+    enabled: true
+    path: "D:/Training Project/Project 2/src/AirFlow/data/rejected"
+    create_reason_directories: true
+
+  duplicate_detection:
+    enabled: true
+    check_filename: true
+    check_content_hash: true
+
+  timestamp_validation:
+    enabled: true
+    column: datetime
+    invalid_action: QUARANTINE
+
+  activity_validation:
+    enabled: true
+
+    columns:
+      - smsin
+      - smsout
+      - callin
+      - callout
+      - internet
+
+    allow_negative: false
+    invalid_action: QUARANTINE
+
+  schema_validation:
+    reject_missing_columns: true
+    warn_unexpected_columns: true
+
+  corrupt_file_validation:
+    enabled: true
+    invalid_action: QUARANTINE
+
+  spark:
+    retries: 2
+    retry_delay_minutes: 2
+
+  safe_rerun:
+    enabled: true
+    prevent_duplicate_ingestion: true
+
+  status:
+    enabled: true
+    path: "D:/Training Project/Project 2/src/AirFlow/status/pipeline_status.json"
+    record_failure_type: true
+    record_action: true
+    record_file: true
+    record_message: true
+
+  testing:
+    enabled: true
+
+    scenarios:
+      - missing_file
+      - duplicate_file
+      - duplicate_ingestion
+      - malformed_timestamp
+      - negative_activity
+      - missing_required_column
+      - unexpected_column
+      - partially_corrupt_file
+      - spark_failure
+
+  progress:
+    failure_matrix: PENDING
+    duplicate_control: PENDING
+    quarantine_control: PENDING
+    validation_controls: PENDING
+    spark_retry_control: PENDING
+    safe_rerun: PENDING
+    status_verification: PENDING
+    regression_tests: PENDING

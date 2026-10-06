@@ -1,0 +1,76 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(python --version)",
+      "Bash(python -m pytest *)",
+      "Bash(pytest *)",
+      "Bash(python -m ruff *)",
+      "Bash(ruff *)",
+      "Bash(npm test *)",
+      "Bash(npm run lint *)",
+      "Bash(npm run build *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)"
+    ],
+    "ask": [
+      "Edit(/src/AirFlow/**)",
+      "Edit(/Phase 2/**)",
+      "Edit(/Phase 3/**)",
+      "Edit(/src/Backend/**)",
+      "Edit(/src/ML Layer/**)",
+      "Edit(/src/Frontend/**)",
+      "Bash(pip install *)",
+      "Bash(python -m pip install *)",
+      "Bash(npm install *)",
+      "Bash(npm ci *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git reset *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./credentials/**)",
+      "Edit(/data/raw/**)",
+      "Write(/data/raw/**)",
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)",
+      "Bash(del /s /q *)",
+      "Bash(rmdir /s /q *)",
+      "Bash(Remove-Item -Recurse *)",
+      "Bash(DROP DATABASE *)",
+      "Bash(DROP TABLE *)",
+      "Bash(TRUNCATE TABLE *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .claude/hooks/run-quality-tests.ps1"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .claude/hooks/protect-pipeline-config.ps1"
+          }
+        ]
+      }
+    ]
+  }
+}

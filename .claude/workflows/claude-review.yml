@@ -1,0 +1,30 @@
+name: Claude Engineering Review
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run tests
+        run: |
+          python -m pytest
+
+      - name: Run Claude review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude -p "Review the current repository changes using .claude/review.md. Do not modify files." \
+            --bare \
+            --allowedTools "Read,Grep,Glob" \
+            --output-format json
